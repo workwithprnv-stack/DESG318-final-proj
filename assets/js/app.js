@@ -759,17 +759,149 @@ function renderCart() {
 }
 
 function checkout() {
-    toast('Order placed! (demo)');
-    cart = [];
-    updateCartBadge();
-    goHome();
+    if (cart.length === 0) {
+        toast('Your cart is empty');
+        return;
+    }
+    showCheckoutPage();
 }
+
+function showCheckoutPage() {
+    document.getElementById('homePage').style.display = 'none';
+    document.getElementById('cartPage').style.display = 'none';
+    document.getElementById('detailPage').style.display = 'none';
+    document.getElementById('checkoutPage').style.display = 'block';
+    
+    // Populate checkout items
+    renderCheckoutItems();
+    updateCheckoutSummary();
+    
+    // Scroll to top
+    document.getElementById('appScroll').scrollTop = 0;
+}
+
+function renderCheckoutItems() {
+    const checkoutItems = document.getElementById('checkoutItems');
+    if (!checkoutItems) return;
+    
+    checkoutItems.innerHTML = cart.map(c => `
+        <div class="summary-item">
+            <img class="summary-item-img" src="${c.img}" onerror="this.style.background='#eee'" alt="${c.name}">
+            <div class="summary-item-details">
+                <div class="summary-item-name">${c.name}</div>
+                <div class="summary-item-qty">Qty: ${c.qty}</div>
+            </div>
+            <div class="summary-item-price">&#8377;${(c.price * c.qty).toLocaleString()}</div>
+        </div>
+    `).join('');
+}
+
+function updateCheckoutSummary() {
+    const sub = cart.reduce((s, c) => s + c.price * c.qty, 0);
+    const deliveryCharge = document.querySelector('input[name="delivery"]:checked')?.id === 'express' ? 99 : 0;
+    const total = sub + deliveryCharge;
+    
+    const subtotalEl = document.getElementById('checkoutSubtotal');
+    const totalEl = document.getElementById('checkoutTotal');
+    
+    if (subtotalEl) subtotalEl.textContent = `&#8377;${sub.toLocaleString()}`;
+    if (totalEl) totalEl.textContent = `&#8377;${total.toLocaleString()}`;
+}
+
+function placeOrder() {
+    // Validate cart
+    if (cart.length === 0) {
+        toast('Your cart is empty');
+        return;
+    }
+    
+    // Get selected options
+    const selectedAddress = document.querySelector('input[name="address"]:checked');
+    const selectedDelivery = document.querySelector('input[name="delivery"]:checked');
+    const selectedPayment = document.querySelector('input[name="payment"]:checked');
+    
+    if (!selectedAddress || !selectedDelivery || !selectedPayment) {
+        toast('Please complete all checkout steps');
+        return;
+    }
+    
+    // Simulate order processing
+    toast('Processing order...');
+    
+    setTimeout(() => {
+        // Clear cart
+        cart = [];
+        updateCartBadge();
+        renderCart();
+        
+        // Show success message
+        toast('Order placed successfully! (demo)');
+        
+        // Go to home
+        setTimeout(() => {
+            showPage('home');
+        }, 2000);
+    }, 1500);
+}
+
+// Add event listeners for delivery options
+document.addEventListener('DOMContentLoaded', function() {
+    // Add delivery option change listeners
+    setTimeout(() => {
+        const deliveryRadios = document.querySelectorAll('input[name="delivery"]');
+        deliveryRadios.forEach(radio => {
+            radio.addEventListener('change', updateCheckoutSummary);
+        });
+        
+        // Add address option click listeners
+        const addressCards = document.querySelectorAll('.address-card');
+        addressCards.forEach(card => {
+            card.addEventListener('click', function() {
+                const radio = this.querySelector('input[type="radio"]');
+                if (radio) radio.checked = true;
+                
+                // Update selected state
+                document.querySelectorAll('.address-card').forEach(c => c.classList.remove('selected'));
+                this.classList.add('selected');
+            });
+        });
+        
+        // Add delivery option click listeners
+        const deliveryOptions = document.querySelectorAll('.delivery-option');
+        deliveryOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                const radio = this.querySelector('input[type="radio"]');
+                if (radio) radio.checked = true;
+                
+                // Update selected state
+                document.querySelectorAll('.delivery-option').forEach(o => o.classList.remove('selected'));
+                this.classList.add('selected');
+                
+                updateCheckoutSummary();
+            });
+        });
+        
+        // Add payment option click listeners
+        const paymentOptions = document.querySelectorAll('.payment-option');
+        paymentOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                const radio = this.querySelector('input[type="radio"]');
+                if (radio) radio.checked = true;
+                
+                // Update selected state
+                document.querySelectorAll('.payment-option').forEach(o => o.classList.remove('selected'));
+                this.classList.add('selected');
+            });
+        });
+    }, 100);
+});
 
 // Navigation Functions
 function showPage(page) {
     document.getElementById('homePage').style.display = 'none';
     document.getElementById('detailPage').style.display = 'none';
     document.getElementById('cartPage').style.display = 'none';
+    document.getElementById('checkoutPage').style.display = 'none';
     if (page === 'cart') {
         document.getElementById('cartPage').style.display = 'block';
         renderCart();

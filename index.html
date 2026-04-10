@@ -169,6 +169,159 @@
 
             </div>
 
+                <!-- CHECKOUT PAGE -->
+                <div id="checkoutPage" style="display:none">
+                    <!-- CHECKOUT HEADER -->
+                    <div class="checkout-header">
+                        <div class="checkout-back" onclick="showPage('cart')"><i class="fas fa-arrow-left"></i></div>
+                        <div class="checkout-title">Checkout</div>
+                        <div class="checkout-steps">
+                            <div class="step active">1</div>
+                            <div class="step">2</div>
+                            <div class="step">3</div>
+                        </div>
+                    </div>
+
+                    <!-- SHIPPING ADDRESS -->
+                    <div class="checkout-section">
+                        <div class="section-header">
+                            <h3><i class="fas fa-map-marker-alt"></i> Shipping Address</h3>
+                        </div>
+                        <div class="address-card selected">
+                            <div class="address-radio">
+                                <input type="radio" name="address" id="address1" checked>
+                                <label for="address1"></label>
+                            </div>
+                            <div class="address-content">
+                                <div class="address-name">John Doe</div>
+                                <div class="address-text">
+                                    123 Main Street, Apt 4B<br>
+                                    Mumbai, Maharashtra 400001<br>
+                                    Phone: +91 98765 43210
+                                </div>
+                                <button class="address-edit"><i class="fas fa-edit"></i></button>
+                            </div>
+                        </div>
+                        <button class="add-address-btn">
+                            <i class="fas fa-plus"></i> Add New Address
+                        </button>
+                    </div>
+
+                    <!-- DELIVERY OPTIONS -->
+                    <div class="checkout-section">
+                        <div class="section-header">
+                            <h3><i class="fas fa-truck"></i> Delivery Options</h3>
+                        </div>
+                        <div class="delivery-options">
+                            <div class="delivery-option selected">
+                                <div class="delivery-radio">
+                                    <input type="radio" name="delivery" id="standard" checked>
+                                    <label for="standard"></label>
+                                </div>
+                                <div class="delivery-content">
+                                    <div class="delivery-title">Standard Delivery</div>
+                                    <div class="delivery-date">Tomorrow, 8:00 AM - 8:00 PM</div>
+                                    <div class="delivery-price">FREE</div>
+                                </div>
+                            </div>
+                            <div class="delivery-option">
+                                <div class="delivery-radio">
+                                    <input type="radio" name="delivery" id="express">
+                                    <label for="express"></label>
+                                </div>
+                                <div class="delivery-content">
+                                    <div class="delivery-title">Express Delivery</div>
+                                    <div class="delivery-date">Today, 6:00 PM - 10:00 PM</div>
+                                    <div class="delivery-price">₹99</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- PAYMENT METHOD -->
+                    <div class="checkout-section">
+                        <div class="section-header">
+                            <h3><i class="fas fa-credit-card"></i> Payment Method</h3>
+                        </div>
+                        <div class="payment-options">
+                            <div class="payment-option selected">
+                                <div class="payment-radio">
+                                    <input type="radio" name="payment" id="card" checked>
+                                    <label for="card"></label>
+                                </div>
+                                <div class="payment-content">
+                                    <div class="payment-title">Credit/Debit Card</div>
+                                    <div class="payment-icons">
+                                        <i class="fab fa-cc-visa"></i>
+                                        <i class="fab fa-cc-mastercard"></i>
+                                        <i class="fab fa-cc-amex"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="payment-option">
+                                <div class="payment-radio">
+                                    <input type="radio" name="payment" id="upi">
+                                    <label for="upi"></label>
+                                </div>
+                                <div class="payment-content">
+                                    <div class="payment-title">UPI</div>
+                                    <div class="payment-icons">
+                                        <i class="fas fa-mobile-alt"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="payment-option">
+                                <div class="payment-radio">
+                                    <input type="radio" name="payment" id="cod">
+                                    <label for="cod"></label>
+                                </div>
+                                <div class="payment-content">
+                                    <div class="payment-title">Cash on Delivery</div>
+                                    <div class="payment-icons">
+                                        <i class="fas fa-money-bill-wave"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ORDER SUMMARY -->
+                    <div class="checkout-section">
+                        <div class="section-header">
+                            <h3><i class="fas fa-receipt"></i> Order Summary</h3>
+                        </div>
+                        <div class="order-summary">
+                            <div class="summary-items" id="checkoutItems">
+                                <!-- Cart items will be populated here -->
+                            </div>
+                            <div class="summary-row">
+                                <span>Subtotal</span>
+                                <span id="checkoutSubtotal">₹0</span>
+                            </div>
+                            <div class="summary-row">
+                                <span>Delivery Charges</span>
+                                <span style="color:#388E3C">FREE</span>
+                            </div>
+                            <div class="summary-row total">
+                                <span>Total Amount</span>
+                                <span id="checkoutTotal">₹0</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- PLACE ORDER BUTTON -->
+                    <div class="checkout-actions">
+                        <button class="btn-place-order" onclick="placeOrder()">
+                            <i class="fas fa-lock"></i> Place Order
+                        </button>
+                        <div class="secure-text">
+                            <i class="fas fa-shield-alt"></i> Secure checkout powered by Amazon
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
     <script src="assets/js/app.js"></script>
 </body>
 </html>
