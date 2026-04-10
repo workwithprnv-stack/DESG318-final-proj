@@ -24,7 +24,6 @@ body {
     position: relative;
 }
 
-/* SCROLLABLE CONTENT */
 .app-scroll {
     flex: 1;
     overflow-y: auto;
@@ -892,9 +891,9 @@ body {
     border-top: 1px solid #ddd;
     display: flex;
     padding: 6px 0;
-    position: sticky;
-    bottom: 0;
+    position: relative;
     z-index: 100;
+    flex-shrink: 0;
 }
 
 .nav-btn {
@@ -998,6 +997,7 @@ body {
     justify-content: center;
     background: #fff;
     flex-shrink: 0;
+    position: relative;
 }
 
 .home-bar {
@@ -1025,6 +1025,13 @@ body {
 }
 
 /* CHECKOUT PAGE STYLES */
+#checkoutPage {
+    display: none;
+    flex-direction: column;
+    min-height: 100%;
+    background: #EAEDED;
+}
+
 .checkout-header {
     background: #232F3E;
     padding: 16px;
@@ -1034,6 +1041,7 @@ body {
     position: sticky;
     top: 0;
     z-index: 100;
+    flex-shrink: 0;
 }
 
 .checkout-back {
@@ -1077,6 +1085,12 @@ body {
 .step.active {
     background: #FF9900;
     color: #111;
+}
+
+/* CHECKOUT CONTENT WRAPPER */
+.checkout-content {
+    flex: 1;
+    overflow-y: auto;
 }
 
 /* CHECKOUT SECTIONS */
@@ -1451,6 +1465,8 @@ body {
     padding: 16px;
     background: #fff;
     border-top: 1px solid #EAEDED;
+    margin-top: auto;
+    flex-shrink: 0;
 }
 
 .btn-place-order {
@@ -1479,6 +1495,26 @@ body {
     transform: scale(0.98);
 }
 
+/* Android-style touch feedback */
+.checkout-option:active,
+.address-card:active,
+.delivery-option:active,
+.payment-option:active {
+    background: #F0F2F5;
+    transform: scale(0.99);
+    transition: all 0.1s;
+}
+
+.checkout-back:active {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(0.95);
+}
+
+.add-address-btn:active {
+    background: #E8F0FE;
+    transform: scale(0.98);
+}
+
 .secure-text {
     text-align: center;
     font-size: 12px;
@@ -1491,4 +1527,36 @@ body {
 
 .secure-text i {
     color: #388E3C;
+}
+
+/* CHECKOUT RESPONSIVE DESIGN */
+@media (max-width: 320px) {
+    .checkout-actions {
+        padding: 12px;
+    }
+    
+    .btn-place-order {
+        padding: 14px;
+        font-size: 15px;
+    }
+    
+    .secure-text {
+        font-size: 11px;
+    }
+}
+
+@media (min-width: 768px) {
+    .checkout-actions {
+        max-width: 420px;
+        margin: 0 auto;
+        left: 50%;
+        transform: translateX(-50%);
+        border-radius: 20px 20px 0 0;
+    }
+}
+
+@media (min-width: 1024px) {
+    .checkout-actions {
+        max-width: 480px;
+    }
 }

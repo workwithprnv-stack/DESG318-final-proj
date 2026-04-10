@@ -809,6 +809,11 @@ function updateCheckoutSummary() {
 }
 
 function placeOrder() {
+    // Android-style haptic feedback simulation
+    if (navigator.vibrate) {
+        navigator.vibrate(50);
+    }
+    
     // Validate cart
     if (cart.length === 0) {
         toast('Your cart is empty');
@@ -825,10 +830,22 @@ function placeOrder() {
         return;
     }
     
-    // Simulate order processing
+    // Simulate order processing with Android-style feedback
     toast('Processing order...');
     
+    // Disable button during processing
+    const placeOrderBtn = document.querySelector('.btn-place-order');
+    if (placeOrderBtn) {
+        placeOrderBtn.disabled = true;
+        placeOrderBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+    }
+    
     setTimeout(() => {
+        // Success haptic feedback
+        if (navigator.vibrate) {
+            navigator.vibrate([100, 50, 100]);
+        }
+        
         // Clear cart
         cart = [];
         updateCartBadge();
@@ -837,26 +854,52 @@ function placeOrder() {
         // Show success message
         toast('Order placed successfully! (demo)');
         
-        // Go to home
+        // Re-enable button
+        if (placeOrderBtn) {
+            placeOrderBtn.disabled = false;
+            placeOrderBtn.innerHTML = '<i class="fas fa-lock"></i> Place Order';
+        }
+        
+        // Go to home with Android-style transition
         setTimeout(() => {
-            showPage('home');
+            goHome();
         }, 2000);
     }, 1500);
 }
 
-// Add event listeners for delivery options
+// Android-style back button handling
 document.addEventListener('DOMContentLoaded', function() {
-    // Add delivery option change listeners
+    // Handle Android back button
+    let backPressed = false;
+    
+    // Add back button listener for checkout page
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            const checkoutPage = document.getElementById('checkoutPage');
+            if (checkoutPage && checkoutPage.style.display !== 'none') {
+                showPage('cart');
+                if (navigator.vibrate) navigator.vibrate(50);
+            }
+        }
+    });
+    
+    // Add touch feedback for Android-style interactions
     setTimeout(() => {
+        // Add delivery option change listeners
         const deliveryRadios = document.querySelectorAll('input[name="delivery"]');
         deliveryRadios.forEach(radio => {
-            radio.addEventListener('change', updateCheckoutSummary);
+            radio.addEventListener('change', function() {
+                if (navigator.vibrate) navigator.vibrate(30);
+                updateCheckoutSummary();
+            });
         });
         
-        // Add address option click listeners
+        // Add address option click listeners with haptic feedback
         const addressCards = document.querySelectorAll('.address-card');
         addressCards.forEach(card => {
             card.addEventListener('click', function() {
+                if (navigator.vibrate) navigator.vibrate(30);
+                
                 const radio = this.querySelector('input[type="radio"]');
                 if (radio) radio.checked = true;
                 
@@ -870,6 +913,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const deliveryOptions = document.querySelectorAll('.delivery-option');
         deliveryOptions.forEach(option => {
             option.addEventListener('click', function() {
+                if (navigator.vibrate) navigator.vibrate(30);
+                
                 const radio = this.querySelector('input[type="radio"]');
                 if (radio) radio.checked = true;
                 
@@ -885,12 +930,22 @@ document.addEventListener('DOMContentLoaded', function() {
         const paymentOptions = document.querySelectorAll('.payment-option');
         paymentOptions.forEach(option => {
             option.addEventListener('click', function() {
+                if (navigator.vibrate) navigator.vibrate(30);
+                
                 const radio = this.querySelector('input[type="radio"]');
                 if (radio) radio.checked = true;
                 
                 // Update selected state
                 document.querySelectorAll('.payment-option').forEach(o => o.classList.remove('selected'));
                 this.classList.add('selected');
+            });
+        });
+        
+        // Add touch feedback for buttons
+        const buttons = document.querySelectorAll('.btn-place-order, .add-address-btn, .checkout-back');
+        buttons.forEach(button => {
+            button.addEventListener('touchstart', function() {
+                if (navigator.vibrate) navigator.vibrate(20);
             });
         });
     }, 100);
@@ -902,10 +957,14 @@ function showPage(page) {
     document.getElementById('detailPage').style.display = 'none';
     document.getElementById('cartPage').style.display = 'none';
     document.getElementById('checkoutPage').style.display = 'none';
+    
     if (page === 'cart') {
         document.getElementById('cartPage').style.display = 'block';
         renderCart();
+    } else if (page === 'checkout') {
+        showCheckoutPage();
     }
+    
     document.getElementById('appScroll').scrollTop = 0;
 }
 
@@ -913,6 +972,7 @@ function goHome() {
     document.getElementById('homePage').style.display = 'block';
     document.getElementById('detailPage').style.display = 'none';
     document.getElementById('cartPage').style.display = 'none';
+    document.getElementById('checkoutPage').style.display = 'none';
     setNav('navHome');
     document.getElementById('appScroll').scrollTop = 0;
 }
