@@ -9,70 +9,19 @@
 
 body {
     font-family: 'Roboto', Arial, sans-serif;
-    background: #1a1a2e;
-    display: flex;
-    justify-content: center;
-    padding: 24px 12px 40px;
+    background: #EAEDED;
+    margin: 0;
+    padding: 0;
     min-height: 100vh;
+    overflow-x: hidden;
 }
 
-.scene {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 16px;
-}
-
-.label {
-    color: #aaa;
-    font-size: 12px;
-    letter-spacing: 1px;
-}
-
-/* ANDROID DEVICE FRAME */
-.device {
-    width: 390px;
-    background: #0d0d0d;
-    border-radius: 48px;
-    padding: 12px;
-    box-shadow: 0 0 0 1px #333, 0 32px 80px rgba(0, 0, 0, 0.8);
-}
-
-.device-inner {
-    background: #fff;
-    border-radius: 38px;
-    overflow: hidden;
-    height: 780px;
+.app-container {
+    width: 100%;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     position: relative;
-}
-
-/* STATUS BAR */
-.status-bar {
-    background: #131921;
-    padding: 10px 20px 6px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-shrink: 0;
-}
-
-.status-time {
-    color: #fff;
-    font-size: 13px;
-    font-weight: 500;
-}
-
-.status-icons {
-    display: flex;
-    gap: 6px;
-    align-items: center;
-}
-
-.status-icons span {
-    color: #fff;
-    font-size: 11px;
 }
 
 /* SCROLLABLE CONTENT */
@@ -90,7 +39,7 @@ body {
 /* TOP APP BAR */
 .top-bar {
     background: #131921;
-    padding: 10px 12px 8px;
+    padding: 8px 10px 6px;
     position: sticky;
     top: 0;
     z-index: 100;
@@ -105,20 +54,20 @@ body {
 
 .logo-txt {
     color: #FF9900;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 900;
     letter-spacing: -1px;
 }
 
 .logo-txt span {
     color: #fff;
-    font-size: 11px;
+    font-size: 10px;
     vertical-align: bottom;
 }
 
 .deliver-chip {
     color: #ccc;
-    font-size: 11px;
+    font-size: 10px;
     margin-left: 4px;
 }
 
@@ -129,12 +78,12 @@ body {
 .top-icons {
     margin-left: auto;
     display: flex;
-    gap: 14px;
+    gap: 12px;
 }
 
 .top-icon {
     color: #fff;
-    font-size: 18px;
+    font-size: 16px;
     cursor: pointer;
     position: relative;
 }
@@ -159,23 +108,23 @@ body {
     display: flex;
     align-items: center;
     background: #fff;
-    border-radius: 8px;
-    padding: 8px 12px;
-    gap: 8px;
+    border-radius: 6px;
+    padding: 6px 10px;
+    gap: 6px;
 }
 
 .search-row input {
     flex: 1;
     border: none;
     outline: none;
-    font-size: 14px;
+    font-size: 13px;
     color: #111;
     background: transparent;
 }
 
 .search-icon {
     color: #FF9900;
-    font-size: 18px;
+    font-size: 16px;
     cursor: pointer;
 }
 
@@ -184,7 +133,7 @@ body {
     background: #232F3E;
     display: flex;
     overflow-x: auto;
-    padding: 0 4px;
+    padding: 0 2px;
 }
 
 .cat-tabs::-webkit-scrollbar {
@@ -193,25 +142,25 @@ body {
 
 .cat-tab {
     color: #ccc;
-    font-size: 12px;
-    padding: 8px 12px;
-    white-space: nowrap;
+    font-size: 11px;
+    padding: 6px 8px;
     cursor: pointer;
+    white-space: nowrap;
     border-bottom: 2px solid transparent;
-    flex-shrink: 0;
+    transition: all 0.2s;
 }
 
 .cat-tab.active {
-    color: #FF9900;
+    color: #fff;
     border-bottom-color: #FF9900;
 }
 
 /* BANNER */
 .banner {
     background: #232F3E;
-    margin: 8px;
-    border-radius: 12px;
-    padding: 16px;
+    margin: 6px;
+    border-radius: 10px;
+    padding: 12px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -222,30 +171,30 @@ body {
 
 .banner-content h3 {
     color: #fff;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 700;
-    margin-bottom: 4px;
+    margin-bottom: 3px;
 }
 
 .banner-content p {
     color: #aaa;
-    font-size: 12px;
-    margin-bottom: 10px;
+    font-size: 11px;
+    margin-bottom: 8px;
 }
 
 .banner-btn {
     background: #FF9900;
     color: #111;
     border: none;
-    border-radius: 20px;
-    padding: 7px 16px;
-    font-size: 12px;
+    border-radius: 16px;
+    padding: 5px 12px;
+    font-size: 11px;
     font-weight: 700;
     cursor: pointer;
 }
 
 .banner-emoji {
-    font-size: 52px;
+    font-size: 40px;
     opacity: .7;
 }
 
@@ -273,18 +222,18 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 12px 12px 6px;
+    padding: 8px 10px 4px;
 }
 
 .sec-hdr h4 {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 700;
     color: #111;
 }
 
 .sec-hdr a {
     color: #007185;
-    font-size: 12px;
+    font-size: 11px;
     cursor: pointer;
 }
 
@@ -292,8 +241,8 @@ body {
 .cat-icons {
     display: flex;
     overflow-x: auto;
-    padding: 4px 12px 8px;
-    gap: 16px;
+    padding: 4px 10px 6px;
+    gap: 12px;
 }
 
 .cat-icons::-webkit-scrollbar {
@@ -304,26 +253,26 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 6px;
+    gap: 4px;
     cursor: pointer;
     flex-shrink: 0;
 }
 
 .cat-circle {
-    width: 56px;
-    height: 56px;
+    width: 48px;
+    height: 48px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 24px;
+    font-size: 20px;
 }
 
 .cat-icon-item span {
-    font-size: 11px;
+    font-size: 10px;
     color: #333;
     text-align: center;
-    max-width: 60px;
+    max-width: 50px;
     line-height: 1.2;
 }
 
@@ -331,8 +280,8 @@ body {
 .deals-row {
     display: flex;
     overflow-x: auto;
-    padding: 4px 12px 12px;
-    gap: 10px;
+    padding: 4px 10px 10px;
+    gap: 8px;
 }
 
 .deals-row::-webkit-scrollbar {
@@ -341,8 +290,8 @@ body {
 
 .deal-card {
     background: #fff;
-    border-radius: 12px;
-    width: 148px;
+    border-radius: 10px;
+    width: 130px;
     flex-shrink: 0;
     overflow: hidden;
     cursor: pointer;
@@ -940,39 +889,83 @@ body {
 /* BOTTOM NAV */
 .bottom-nav {
     background: #fff;
-    border-top: .5px solid #ddd;
+    border-top: 1px solid #ddd;
     display: flex;
-    flex-shrink: 0;
-    padding-bottom: env(safe-area-inset-bottom, 4px);
+    padding: 6px 0;
+    position: sticky;
+    bottom: 0;
+    z-index: 100;
 }
 
 .nav-btn {
     flex: 1;
-    padding: 8px 4px 6px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 3px;
-    cursor: pointer;
-    border: none;
+    gap: 2px;
     background: none;
+    border: none;
+    padding: 3px;
+    cursor: pointer;
+    transition: all 0.2s;
 }
 
-.nav-btn .n-icon {
-    font-size: 20px;
+.nav-btn.active {
+    color: #FF9900;
 }
 
-.nav-btn .n-label {
-    font-size: 10px;
-    color: #888;
+.n-icon {
+    font-size: 18px;
+    color: #666;
 }
 
+.n-label {
+    font-size: 9px;
+    color: #666;
+}
+
+.nav-btn.active .n-icon,
 .nav-btn.active .n-label {
     color: #FF9900;
 }
 
 .nav-btn.active .n-icon {
     filter: sepia(1) saturate(5) hue-rotate(5deg);
+}
+
+/* RESPONSIVE BREAKPOINTS */
+@media (max-width: 320px) {
+    .cat-circle {
+        width: 44px;
+        height: 44px;
+        font-size: 18px;
+    }
+    
+    .deal-card {
+        width: 120px;
+    }
+    
+    .logo-txt {
+        font-size: 16px;
+    }
+    
+    .deliver-chip {
+        display: none;
+    }
+}
+
+@media (min-width: 768px) {
+    .app-container {
+        max-width: 420px;
+        margin: 0 auto;
+    }
+}
+
+@media (min-width: 1024px) {
+    .app-container {
+        max-width: 480px;
+        margin: 0 auto;
+    }
 }
 
 /* TOAST */

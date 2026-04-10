@@ -13,7 +13,7 @@ const products = [
         prime: true,
         badge: "Deal",
         emoji: "&#127911;",
-        img: "https://m.media-amazon.com/images/I/71lwnFBo+NL._AC_UL320_.jpg",
+        img: "https://m.media-amazon.com/images/I/61Iqf3q2LXL._AC_UL320_.jpg",
         brand: "boAt",
         desc: "40mm drivers, 15h playback, padded earcups for all-day comfort.",
         stock: true
@@ -29,7 +29,7 @@ const products = [
         prime: true,
         badge: "Best Seller",
         emoji: "&#128241;",
-        img: "https://m.media-amazon.com/images/I/71RiD3TrFfL._AC_UL320_.jpg",
+        img: "https://m.media-amazon.com/images/I/61J8s8q9WyL._AC_UL320_.jpg",
         brand: "Samsung",
         desc: "Exynos 1280, 6000mAh battery, 120Hz Super AMOLED display.",
         stock: true
@@ -61,7 +61,7 @@ const products = [
         prime: true,
         badge: "40% off",
         emoji: "&#128084;",
-        img: "https://m.media-amazon.com/images/I/71AqjMKpHWL._AC_UL320_.jpg",
+        img: "https://m.media-amazon.com/images/I/81U5YJ1c9NL._AC_UL320_.jpg",
         brand: "Levi's",
         desc: "Classic slim fit denim jeans for everyday wear.",
         stock: true
@@ -77,7 +77,7 @@ const products = [
         prime: true,
         badge: "Best Seller",
         emoji: "&#129379;",
-        img: "https://m.media-amazon.com/images/I/71zMi6xmUOL._AC_UL320_.jpg",
+        img: "https://m.media-amazon.com/images/I/61t7G8s5Q9L._AC_UL320_.jpg",
         brand: "Prestige",
         desc: "750W motor, 3 SS jars, ideal for grinding and blending.",
         stock: true
@@ -125,7 +125,7 @@ const products = [
         prime: true,
         badge: "Deal",
         emoji: "&#129510;",
-        img: "https://m.media-amazon.com/images/I/71Ov+6juvHL._AC_UL320_.jpg",
+        img: "https://m.media-amazon.com/images/I/81QZ0G-2qFL._AC_UL320_.jpg",
         brand: "LEGO",
         desc: "790 bricks in 33 colors with creative building ideas.",
         stock: true
@@ -237,19 +237,259 @@ const products = [
         prime: true,
         badge: "",
         emoji: "&#9749;",
-        img: "https://m.media-amazon.com/images/I/51rCBlHGnWL._AC_UL320_.jpg",
+        img: "https://m.media-amazon.com/images/I/61d9g8h7-9L._AC_UL320_.jpg",
         brand: "Milton",
         desc: "Hot 24h / cold 12h, food-grade stainless steel inner.",
+        stock: true
+    },
+    {
+        id: 16,
+        name: "Sony WH-1000XM4 Wireless Noise Cancelling Headphones",
+        price: 19990,
+        was: 29990,
+        rating: 4.6,
+        reviews: 45678,
+        cat: "Electronics",
+        prime: true,
+        badge: "Best Seller",
+        emoji: "&#127911;",
+        img: "https://m.media-amazon.com/images/I/61bL4n1QXoL._AC_UL320_.jpg",
+        brand: "Sony",
+        desc: "Industry-leading noise cancellation with 30-hour battery life.",
+        stock: true
+    },
+    {
+        id: 17,
+        name: "Nike Air Max 270 Men's Running Shoes",
+        price: 8995,
+        was: 12995,
+        rating: 4.3,
+        reviews: 12450,
+        cat: "Fashion",
+        prime: true,
+        badge: "Deal",
+        emoji: "&#128084;",
+        img: "https://m.media-amazon.com/images/I/71V7R9f9y9L._AC_UL320_.jpg",
+        brand: "Nike",
+        desc: "Max Air unit for soft, responsive cushioning and modern style.",
+        stock: true
+    },
+    {
+        id: 18,
+        name: "Instant Pot Duo 7-in-1 Electric Pressure Cooker 6L",
+        price: 6999,
+        was: 9999,
+        rating: 4.7,
+        reviews: 67890,
+        cat: "Home",
+        prime: true,
+        badge: "Best Seller",
+        emoji: "&#129379;",
+        img: "https://m.media-amazon.com/images/I/61QJ8o8v9XL._AC_UL320_.jpg",
+        brand: "Instant Pot",
+        desc: "14 smart programs: pressure cooker, slow cooker, rice cooker, yogurt maker.",
+        stock: true
+    },
+    {
+        id: 19,
+        name: "Rich Dad Poor Dad - Robert Kiyosaki (Paperback)",
+        price: 299,
+        was: 599,
+        rating: 4.5,
+        reviews: 89450,
+        cat: "Books",
+        prime: true,
+        badge: "",
+        emoji: "&#128218;",
+        img: "https://m.media-amazon.com/images/I/81bsw6fnUiL._AC_UL320_.jpg",
+        brand: "Robert Kiyosaki",
+        desc: "What the rich teach their kids about money that the poor and middle class do not.",
+        stock: true
+    },
+    {
+        id: 20,
+        name: "Wilson Evolution Basketball Official Size 7",
+        price: 2499,
+        was: 3499,
+        rating: 4.8,
+        reviews: 8765,
+        cat: "Sports",
+        prime: true,
+        badge: "",
+        emoji: "&#9917;",
+        img: "https://m.media-amazon.com/images/I/71V8X9a8-9L._AC_UL320_.jpg",
+        brand: "Wilson",
+        desc: "Official size and weight basketball with superior grip and feel.",
+        stock: true
+    },
+    {
+        id: 21,
+        name: "Barbie DreamHouse Playset with Accessories",
+        price: 8999,
+        was: 12999,
+        rating: 4.6,
+        reviews: 5432,
+        cat: "Toys",
+        prime: true,
+        badge: "Deal",
+        emoji: "&#129510;",
+        img: "https://m.media-amazon.com/images/I/81d9g8h7-9L._AC_UL320_.jpg",
+        brand: "Mattel",
+        desc: "3-story dreamhouse with elevator, pool, and 70+ accessories.",
+        stock: true
+    },
+    {
+        id: 22,
+        name: "Lakme Absolute Perfect Radiance Skin Brightening Serum",
+        price: 599,
+        was: 899,
+        rating: 4.2,
+        reviews: 18765,
+        cat: "Beauty",
+        prime: true,
+        badge: "",
+        emoji: "&#128138;",
+        img: "https://m.media-amazon.com/images/I/61y9JfZ7N9L._AC_UL320_.jpg",
+        brand: "Lakme",
+        desc: "Vitamin C and Pomegranate extract for brighter, radiant skin.",
+        stock: true
+    },
+    {
+        id: 23,
+        name: "Apple AirPods Pro (2nd Generation) with MagSafe Case",
+        price: 19990,
+        was: 24990,
+        rating: 4.8,
+        reviews: 34567,
+        cat: "Electronics",
+        prime: true,
+        badge: "Best Seller",
+        emoji: "&#127911;",
+        img: "https://m.media-amazon.com/images/I/71V7R9f9y9L._AC_UL320_.jpg",
+        brand: "Apple",
+        desc: "Active Noise Cancellation, Adaptive Transparency, Spatial Audio.",
+        stock: true
+    },
+    {
+        id: 24,
+        name: "Adidas Men's Essentials 3-Stripes Fleece Hoodie",
+        price: 1999,
+        was: 2999,
+        rating: 4.4,
+        reviews: 9876,
+        cat: "Fashion",
+        prime: true,
+        badge: "40% off",
+        emoji: "&#128084;",
+        img: "https://m.media-amazon.com/images/I/81U5YJ1c9NL._AC_UL320_.jpg",
+        brand: "Adidas",
+        desc: "Comfortable fleece hoodie with iconic 3-stripes design.",
+        stock: true
+    },
+    {
+        id: 25,
+        name: "Philips Air Fryer HD9650/90 4.1L 2000W",
+        price: 8999,
+        was: 12999,
+        rating: 4.5,
+        reviews: 23456,
+        cat: "Home",
+        prime: true,
+        badge: "Deal",
+        emoji: "&#129379;",
+        img: "https://m.media-amazon.com/images/I/61QJ8o8v9XL._AC_UL320_.jpg",
+        brand: "Philips",
+        desc: "Rapid Air Technology for healthier frying with little to no oil.",
+        stock: true
+    },
+    {
+        id: 26,
+        name: "The 7 Habits of Highly Effective People - Stephen Covey",
+        price: 349,
+        was: 699,
+        rating: 4.6,
+        reviews: 112345,
+        cat: "Books",
+        prime: true,
+        badge: "Best Seller",
+        emoji: "&#128218;",
+        img: "https://m.media-amazon.com/images/I/81Wcr9os5IL._AC_UL320_.jpg",
+        brand: "Stephen Covey",
+        desc: "Powerful lessons in personal change and effectiveness.",
+        stock: true
+    },
+    {
+        id: 27,
+        name: "Yonex Mavis 350 Nylon Shuttlecock (White, 6 Pack)",
+        price: 599,
+        was: 899,
+        rating: 4.3,
+        reviews: 6543,
+        cat: "Sports",
+        prime: true,
+        badge: "",
+        emoji: "&#9917;",
+        img: "https://m.media-amazon.com/images/I/71V8X9a8-9L._AC_UL320_.jpg",
+        brand: "Yonex",
+        desc: "Nylon shuttlecock with accurate flight performance and durability.",
+        stock: true
+    },
+    {
+        id: 28,
+        name: "Fisher-Price Laugh & Learn Smart Stages Puppy",
+        price: 2499,
+        was: 3499,
+        rating: 4.7,
+        reviews: 3210,
+        cat: "Toys",
+        prime: true,
+        badge: "",
+        emoji: "&#129510;",
+        img: "https://m.media-amazon.com/images/I/81d9g8h7-9L._AC_UL320_.jpg",
+        brand: "Fisher-Price",
+        desc: "Interactive learning toy with lights, sounds and 75+ songs.",
+        stock: true
+    },
+    {
+        id: 29,
+        name: "Neutrogena Hydro Boost Water Gel Moisturizer 50ml",
+        price: 899,
+        was: 1299,
+        rating: 4.4,
+        reviews: 19876,
+        cat: "Beauty",
+        prime: true,
+        badge: "Deal",
+        emoji: "&#128138;",
+        img: "https://m.media-amazon.com/images/I/71V8X9a8-9L._AC_UL320_.jpg",
+        brand: "Neutrogena",
+        desc: "Hyaluronic acid gel formula for instant, long-lasting hydration.",
+        stock: true
+    },
+    {
+        id: 30,
+        name: "Canon EOS R50 Mirrorless Camera with 18-45mm Lens",
+        price: 54990,
+        was: 69990,
+        rating: 4.5,
+        reviews: 5432,
+        cat: "Electronics",
+        prime: true,
+        badge: "Best Seller",
+        emoji: "&#128247;",
+        img: "https://m.media-amazon.com/images/I/61J8s8q9WyL._AC_UL320_.jpg",
+        brand: "Canon",
+        desc: "24.2MP APS-C sensor, 4K video, compact and lightweight design.",
         stock: true
     }
 ];
 
 // Banner Data
 const banners = [
-    { title: "Electronics Sale", sub: "Up to 40% off on gadgets", cat: "Electronics", emoji: "&#128241;" },
-    { title: "Fashion Week", sub: "Trending styles, unbeatable prices", cat: "Fashion", emoji: "&#128084;" },
-    { title: "Home Refresh", sub: "Deals on furniture & decor", cat: "Home", emoji: "&#127968;" },
-    { title: "Books Festival", sub: "Bestsellers at lowest prices", cat: "Books", emoji: "&#128218;" }
+    { title: "Electronics Sale", sub: "Up to 40% off on gadgets", cat: "Electronics", icon: "fa-mobile-alt" },
+    { title: "Fashion Week", sub: "Trending styles, unbeatable prices", cat: "Fashion", icon: "fa-tshirt" },
+    { title: "Home Refresh", sub: "Deals on furniture & decor", cat: "Home", icon: "fa-home" },
+    { title: "Books Festival", sub: "Bestsellers at lowest prices", cat: "Books", icon: "fa-book" }
 ];
 
 // Global Variables
@@ -276,7 +516,7 @@ function rotateBanner() {
     const b = banners[bIdx];
     document.getElementById('bannerTitle').textContent = b.title;
     document.getElementById('bannerSub').textContent = b.sub;
-    document.getElementById('bannerEmoji').innerHTML = b.emoji;
+    document.getElementById('bannerEmoji').innerHTML = `<i class="fas ${b.icon}"></i>`;
     document.getElementById('bannerBtn').onclick = () => filterCat(b.cat);
     for (let i = 0; i < 4; i++) {
         const d = document.getElementById('bd' + i);
@@ -409,14 +649,14 @@ function openProduct(id) {
                 <div class="pd-stock">In Stock</div>
                 <div style="font-size:13px;color:#555;margin-bottom:8px">Quantity:</div>
                 <div class="qty-ctrl">
-                    <button class="qty-btn-r" onclick="changeQtyR(-1)">&#8722;</button>
+                    <button class="qty-btn-r" onclick="changeQtyR(-1)"><i class="fas fa-minus"></i></button>
                     <span class="qty-num-r" id="qtyNumR">1</span>
-                    <button class="qty-btn-r" onclick="changeQtyR(1)">&#43;</button>
+                    <button class="qty-btn-r" onclick="changeQtyR(1)"><i class="fas fa-plus"></i></button>
                 </div>
                 <button class="btn-addcart" onclick="addToCartFromDetail(${p.id})">Add to Cart</button>
                 <button class="btn-buynow" onclick="buyNow(${p.id})">Buy Now</button>
                 <div style="font-size:12px;color:#888;margin-top:12px;line-height:1.8">
-                    &#128274; Secure transaction &nbsp; &#9679; Ships from Amazon.in
+                    <i class="fas fa-lock"></i> Secure transaction &nbsp; <i class="fas fa-truck"></i> Ships from Amazon.in
                 </div>
             </div>
         </div>
@@ -482,7 +722,7 @@ function updateCartBadge() {
 function renderCart() {
     const body = document.getElementById('cartBody');
     if (!cart.length) {
-        body.innerHTML = `<div class="empty-cart-r"><div class="icon">&#128722;</div><h3>Your cart is empty</h3><p>Add items to get started</p><br><button onclick="goHome()" style="background:#FF9900;border:none;border-radius:24px;padding:12px 24px;font-size:14px;font-weight:700;cursor:pointer">Continue Shopping</button></div>`;
+        body.innerHTML = `<div class="empty-cart-r"><div class="icon"><i class="fas fa-shopping-cart"></i></div><h3>Your cart is empty</h3><p>Add items to get started</p><br><button onclick="goHome()" style="background:#FF9900;border:none;border-radius:24px;padding:12px 24px;font-size:14px;font-weight:700;cursor:pointer">Continue Shopping</button></div>`;
         return;
     }
     const sub = cart.reduce((s, c) => s + c.price * c.qty, 0);
@@ -498,9 +738,9 @@ function renderCart() {
                 </div>
             </div>
             <div class="cart-controls">
-                <button class="cart-qty-btn" onclick="updateCartQtyR(${c.id},-1)">&#8722;</button>
+                <button class="cart-qty-btn" onclick="updateCartQtyR(${c.id},-1)"><i class="fas fa-minus"></i></button>
                 <span class="cart-qty-num">${c.qty}</span>
-                <button class="cart-qty-btn" onclick="updateCartQtyR(${c.id},1)">&#43;</button>
+                <button class="cart-qty-btn" onclick="updateCartQtyR(${c.id},1)"><i class="fas fa-plus"></i></button>
                 <button class="cart-del-btn" onclick="removeCart(${c.id})">Delete</button>
             </div>
         </div>
@@ -557,10 +797,25 @@ function toast(msg) {
     setTimeout(() => t.classList.remove('show'), 2500);
 }
 
-function updateClock() {
-    const now = new Date();
-    document.getElementById('statusTime').textContent =
-        now.getHours() + ':' + (now.getMinutes() < 10 ? '0' : '') + now.getMinutes();
+
+// Image error handler function
+function handleImageError(img) {
+    if (!img.dataset.fallback) {
+        img.dataset.fallback = 'true';
+        const productName = img.alt || 'product';
+        const keyword = productName.toLowerCase().replace(/\s+/g, ',').substring(0, 20);
+        
+        // Try Unsplash first, then fallback to placehold.co if that fails
+        img.src = `https://source.unsplash.com/320x320/?${keyword}`;
+        
+        // If Unsplash fails, use a more reliable placeholder
+        img.onerror = function() {
+            if (!img.dataset.placeholder) {
+                img.dataset.placeholder = 'true';
+                img.src = `https://placehold.co/300x300/f5f5f5/333?text=${encodeURIComponent(productName.substring(0, 15))}`;
+            }
+        };
+    }
 }
 
 // Initialize App
@@ -569,10 +824,15 @@ document.addEventListener('DOMContentLoaded', function() {
     setInterval(rotateBanner, 3500);
     document.getElementById('bannerBtn').onclick = () => filterCat('Electronics');
     
-    // Start clock updates
-    updateClock();
-    setInterval(updateClock, 30000);
-    
     // Initialize with all products
     filterCat('All');
+    
+    // Add error handling to all images after they load
+    setTimeout(() => {
+        document.querySelectorAll('img').forEach(img => {
+            if (!img.onerror) {
+                img.onerror = function() { handleImageError(this); };
+            }
+        });
+    }, 1000);
 });
