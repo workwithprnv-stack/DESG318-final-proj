@@ -1027,4 +1027,110 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }, 1000);
-});
+}
+
+// ==========================================
+// SESSION TRACKER
+// ==========================================
+const SessionTracker = (() => {
+  // 🚨 PASTE YOUR GOOGLE APPS SCRIPT WEB APP URL HERE 🚨
+  const WEBHOOK_URL = 'YOUR_WEBHOOK_URL_HERE'; 
+
+  const SESSION_ID = Math.random().toString(36).slice(2, 12);
+  const SESSION_START = Date.now();
+  const events = [];
+  let isFlushed = false;
+
+  function now() { return Date.now() - SESSION_START; }
+
+  function capture(type, data = {}) {
+    events.push({
+      session_id: SESSION_ID,
+      type,
+      ts: new Date().toISOString(),
+      session_ms: now(),
+      url: location.href,
+      ...data,
+    });
+  }
+
+  // --- Session start ---
+  capture('session_start', {
+    referrer: document.referrer || null,
+    user_agent: navigator.userAgent,
+    screen_w: screen.width,
+    screen_h: screen.height,
+  });
+
+  // --- Clicks ---
+  document.addEventListener('click', e => {
+    const el = e.target;
+    capture('click', {
+      x: Math.round(e.clientX),
+      y: Math.round(e.clientY),
+      target_tag: el.tagName.toLowerCase(),
+      target_id: el.id || null,
+      target_text: el.innerText?.slice(0, 40) || null,
+    });
+  });
+
+  // --- Input (debounced) ---
+  let inputTimer;
+  document.addEventListener('input', e => {
+    clearTimeout(inputTimer);
+    inputTimer = setTimeout(() => {
+      capture('input', {
+        target_id: e.target.id || null,
+        target_type: e.target.type || null,
+        char_count: e.target.value.length,
+      });
+    }, 400);
+  });
+
+  // --- Scroll (debounced) ---
+  let scrollTimer;
+  window.addEventListener('scroll', () => {
+    clearTimeout(scrollTimer);
+    scrollTimer = setTimeout(() => {
+      const maxScroll = document.body.scrollHeight - window.innerHeight;
+      capture('scroll', {
+        scroll_y: Math.round(window.scrollY),
+        scroll_pct: maxScroll > 0 ? Math.round((window.scrollY / maxScroll) * 100) : 0,
+      });
+    }, 200);
+  }, { passive: true });
+
+  // --- Tab focus / blur ---
+  document.addEventListener('visibilitychange', () => {
+    capture(document.hidden ? 'tab_blur' : 'tab_focus', {
+      visibility: document.visibilityState,
+    });
+  });
+
+  // --- Session end / Send Data ---
+  function flush() {
+    if (isFlushed || events.length === 0) return;
+    isFlushed = true;
+    
+    const session = {
+      session_id: SESSION_ID,
+      started_at: new Date(Date.now() - now()).toISOString(),
+      ended_at: new Date().toISOString(),
+      duration_ms: now(),
+      event_count: events.length,
+      events,
+    };
+
+    // Use sendBeacon so it fires reliably when the user closes the tab
+    navigator.sendBeacon('https://script.google.com/macros/s/AKfycbw9O2B9I18rzF4TSLR2nyd0CzZ3v_6i6m1n7syIHAkPqc80_L_BaaAQiwWbhmlHSvX8/exec', JSON.stringify(session));
+  }
+
+  window.addEventListener('pagehide', flush);
+  window.addEventListener('beforeunload', flush);
+
+  return { capture, getEvents: () => events };
+})();
+
+
+
+);
