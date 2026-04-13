@@ -1,7 +1,3 @@
-Here’s your README cleaned up and properly formatted for consistent Markdown rendering (fixed headings, spacing, code blocks, and structure):
-
----
-
 # Amazon Android App
 
 A responsive, mobile-first e-commerce application that mimics the Amazon shopping experience on Android devices. This project demonstrates modern web development practices with a clean, maintainable code structure.
