@@ -499,7 +499,113 @@ let currentSort = '';
 let bIdx = 0;
 let currentQty = 1;
 
-// Utility Functions
+// ==========================================
+// SESSION TRACKER
+// ==========================================
+const SessionTracker = (() => {
+    // *** PASTE YOUR APPS SCRIPT WEBHOOK URL HERE ***
+    const WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbw9O2B9I18rzF4TSLR2nyd0CzZ3v_6i6m1n7syIHAkPqc80_L_BaaAQiwWbhmlHSvX8/exec';
+
+    const SESSION_ID = Math.random().toString(36).slice(2, 12);
+    const SESSION_START = Date.now();
+    const events = [];
+    let isFlushed = false;
+
+    function now() { return Date.now() - SESSION_START; }
+
+    function capture(type, data = {}) {
+        events.push({
+            session_id: SESSION_ID,
+            type,
+            ts: new Date().toISOString(),
+            session_ms: now(),
+            url: location.href,
+            ...data,
+        });
+    }
+
+    // Session start — captures device/browser context
+    capture('session_start', {
+        referrer: document.referrer || null,
+        user_agent: navigator.userAgent,
+        screen_w: screen.width,
+        screen_h: screen.height,
+    });
+
+    // Generic click listener — captures every tap with element info
+    document.addEventListener('click', e => {
+        const el = e.target;
+        capture('click', {
+            x: Math.round(e.clientX),
+            y: Math.round(e.clientY),
+            target_tag: el.tagName.toLowerCase(),
+            target_id: el.id || null,
+            target_text: el.innerText?.slice(0, 40) || null,
+        });
+    });
+
+    // Scroll listener (debounced)
+    let scrollTimer;
+    window.addEventListener('scroll', () => {
+        clearTimeout(scrollTimer);
+        scrollTimer = setTimeout(() => {
+            const maxScroll = document.body.scrollHeight - window.innerHeight;
+            capture('scroll', {
+                scroll_y: Math.round(window.scrollY),
+                scroll_pct: maxScroll > 0 ? Math.round((window.scrollY / maxScroll) * 100) : 0,
+            });
+        }, 200);
+    }, { passive: true });
+
+    // Input listener (debounced — never captures actual typed content)
+    let inputTimer;
+    document.addEventListener('input', e => {
+        clearTimeout(inputTimer);
+        inputTimer = setTimeout(() => {
+            capture('input', {
+                target_id: e.target.id || null,
+                target_type: e.target.type || null,
+                char_count: e.target.value.length,
+            });
+        }, 400);
+    });
+
+    // Tab focus / blur
+    document.addEventListener('visibilitychange', () => {
+        capture(document.hidden ? 'tab_blur' : 'tab_focus', {
+            visibility: document.visibilityState,
+        });
+    });
+
+    // Flush session on page close — sendBeacon survives unload
+    function flush() {
+        if (isFlushed || events.length === 0) return;
+        isFlushed = true;
+        const session = {
+            session_id: SESSION_ID,
+            started_at: new Date(Date.now() - now()).toISOString(),
+            ended_at: new Date().toISOString(),
+            duration_ms: now(),
+            url: location.href,
+            referrer: document.referrer || null,
+            screen_w: screen.width,
+            screen_h: screen.height,
+            event_count: events.length,
+            events,
+        };
+        navigator.sendBeacon(WEBHOOK_URL, JSON.stringify(session));
+    }
+
+    window.addEventListener('pagehide', flush);
+    window.addEventListener('beforeunload', flush);
+
+    return { capture, getEvents: () => events };
+})();
+
+// ==========================================
+// UTILITY FUNCTIONS
+// ==========================================
+
 function stars(r) {
     let s = '';
     for (let i = 1; i <= 5; i++) s += r >= i ? '&#9733;' : (r >= i - .5 ? '&#9734;' : '&#9734;');
@@ -510,7 +616,56 @@ function pct(p, w) {
     return Math.round((w - p) / w * 100);
 }
 
-// Banner Functions
+// Non-blocking toast — replaces alert() which blocks sendBeacon
+function toast(msg) {
+    let t = document.getElementById('_toast');
+    if (!t) {
+        t = document.createElement('div');
+        t.id = '_toast';
+        t.style.cssText = [
+            'position:fixed',
+            'bottom:80px',
+            'left:50%',
+            'transform:translateX(-50%)',
+            'background:#333',
+            'color:#fff',
+            'padding:10px 20px',
+            'border-radius:20px',
+            'font-size:13px',
+            'z-index:9999',
+            'pointer-events:none',
+            'transition:opacity 0.3s',
+            'white-space:nowrap'
+        ].join(';');
+        document.body.appendChild(t);
+    }
+    t.textContent = msg;
+    t.style.opacity = '1';
+    clearTimeout(t._timer);
+    t._timer = setTimeout(() => { t.style.opacity = '0'; }, 2500);
+}
+
+function showPage(pageId) {
+    const pages = ['homePage', 'cartPage', 'detailPage', 'checkoutPage'];
+    pages.forEach(p => {
+        const el = document.getElementById(p);
+        if (el) el.style.display = 'none';
+    });
+    const target = document.getElementById(pageId + 'Page');
+    if (target) target.style.display = 'block';
+    const appScroll = document.getElementById('appScroll');
+    if (appScroll) appScroll.scrollTop = 0;
+}
+
+function goHome() {
+    showPage('home');
+    renderCart();
+}
+
+// ==========================================
+// BANNER FUNCTIONS
+// ==========================================
+
 function rotateBanner() {
     bIdx = (bIdx + 1) % banners.length;
     const b = banners[bIdx];
@@ -528,7 +683,10 @@ function bannerClick() {
     filterCat(banners[bIdx].cat);
 }
 
-// Render Functions
+// ==========================================
+// RENDER FUNCTIONS
+// ==========================================
+
 function renderDeals(list) {
     const row = document.getElementById('dealsRow');
     row.innerHTML = list.slice(0, 8).map(p => `
@@ -566,7 +724,10 @@ function renderProducts(list) {
     `).join('');
 }
 
-// Filter and Search Functions
+// ==========================================
+// FILTER AND SEARCH FUNCTIONS
+// ==========================================
+
 function getFiltered() {
     let list = currentCat === 'All' ? products : products.filter(p => p.cat === currentCat);
     if (currentSort === 'priceLow') list = [...list].sort((a, b) => a.price - b.price);
@@ -576,6 +737,9 @@ function getFiltered() {
 }
 
 function filterCat(cat) {
+    // Track category filter
+    SessionTracker.capture('filter_category', { category: cat });
+
     currentCat = cat;
     document.querySelectorAll('.cat-tab').forEach(t => t.classList.toggle('active', t.textContent === cat || (cat === 'All' && t.textContent === 'All')));
     document.getElementById('dealsTitle').textContent = cat === 'All' ? "Today's deals" : `${cat} deals`;
@@ -595,6 +759,12 @@ function setTab(el, cat) {
 function doSearch() {
     const q = document.getElementById('searchBox').value.trim().toLowerCase();
     if (!q) return;
+
+    // Track search query
+    SessionTracker.capture('search', {
+        query: document.getElementById('searchBox').value.trim(),
+    });
+
     const list = products.filter(p => p.name.toLowerCase().includes(q) || p.cat.toLowerCase().includes(q) || p.brand.toLowerCase().includes(q));
     document.getElementById('prodTitle').textContent = `Results for "${document.getElementById('searchBox').value}"`;
     renderDeals(list);
@@ -605,9 +775,22 @@ function focusSearch() {
     document.getElementById('searchBox').focus();
 }
 
-// Product Detail Functions
+// ==========================================
+// PRODUCT DETAIL FUNCTIONS
+// ==========================================
+
 function openProduct(id) {
     const p = products.find(x => x.id === id);
+
+    // Track product view
+    SessionTracker.capture('view_product', {
+        product_id: id,
+        product_name: p.name,
+        category: p.cat,
+        brand: p.brand,
+        price: p.price,
+    });
+
     currentQty = 1;
     const save = p.was - p.price;
     const off = pct(p.price, p.was);
@@ -661,7 +844,7 @@ function openProduct(id) {
             </div>
         </div>
     `;
-    
+
     showPage('detail');
 }
 
@@ -671,7 +854,10 @@ function changeQtyR(d) {
     if (el) el.textContent = currentQty;
 }
 
-// Cart Functions
+// ==========================================
+// CART FUNCTIONS
+// ==========================================
+
 function addToCart(id) {
     const p = products.find(x => x.id === id);
     const ex = cart.find(c => c.id === id);
@@ -679,6 +865,16 @@ function addToCart(id) {
     else cart.push({ ...p, qty: 1 });
     updateCartBadge();
     toast('Added to cart!');
+
+    // Track add to cart
+    SessionTracker.capture('add_to_cart', {
+        product_id: id,
+        product_name: p.name,
+        category: p.cat,
+        brand: p.brand,
+        price: p.price,
+        cart_total_items: cart.reduce((s, c) => s + c.qty, 0),
+    });
 }
 
 function addToCartFromDetail(id) {
@@ -688,15 +884,52 @@ function addToCartFromDetail(id) {
     else cart.push({ ...p, qty: currentQty });
     updateCartBadge();
     toast(`${currentQty} item(s) added to cart`);
+
+    // Track add to cart from detail page
+    SessionTracker.capture('add_to_cart', {
+        product_id: id,
+        product_name: p.name,
+        category: p.cat,
+        brand: p.brand,
+        price: p.price,
+        qty: currentQty,
+        source: 'detail_page',
+        cart_total_items: cart.reduce((s, c) => s + c.qty, 0),
+    });
+
     showPage('cart');
 }
 
 function buyNow(id) {
+    const p = products.find(x => x.id === id);
+
+    // Track buy now tap
+    SessionTracker.capture('buy_now', {
+        product_id: id,
+        product_name: p.name,
+        category: p.cat,
+        price: p.price,
+        qty: currentQty,
+    });
+
     addToCart(id);
     showPage('cart');
 }
 
 function removeCart(id) {
+    const item = cart.find(c => c.id === id);
+
+    // Track remove from cart
+    if (item) {
+        SessionTracker.capture('remove_from_cart', {
+            product_id: id,
+            product_name: item.name,
+            category: item.cat,
+            price: item.price,
+            qty_removed: item.qty,
+        });
+    }
+
     cart = cart.filter(c => c.id !== id);
     updateCartBadge();
     renderCart();
@@ -706,6 +939,14 @@ function updateCartQtyR(id, d) {
     const item = cart.find(c => c.id === id);
     if (item) {
         item.qty = Math.max(1, item.qty + d);
+
+        // Track quantity change
+        SessionTracker.capture('cart_qty_change', {
+            product_id: id,
+            product_name: item.name,
+            new_qty: item.qty,
+            direction: d > 0 ? 'increase' : 'decrease',
+        });
     }
     updateCartBadge();
     renderCart();
@@ -761,13 +1002,19 @@ function checkout() {
         toast('Your cart is empty');
         return;
     }
+
+    // Track checkout initiated
+    SessionTracker.capture('checkout_start', {
+        item_count: cart.reduce((s, c) => s + c.qty, 0),
+        cart_value: cart.reduce((s, c) => s + c.price * c.qty, 0),
+        items: cart.map(c => c.name).join(' | '),
+    });
+
     showCheckoutPage();
 }
 
 function showCheckoutPage() {
     showPage('checkout');
-    
-    // Populate checkout items
     renderCheckoutItems();
     updateCheckoutSummary();
 }
@@ -775,7 +1022,6 @@ function showCheckoutPage() {
 function renderCheckoutItems() {
     const checkoutItems = document.getElementById('checkoutItems');
     if (!checkoutItems) return;
-    
     checkoutItems.innerHTML = cart.map(c => `
         <div class="summary-item">
             <img class="summary-item-img" src="${c.img}" onerror="this.style.background='#eee'" alt="${c.name}">
@@ -792,112 +1038,79 @@ function updateCheckoutSummary() {
     const sub = cart.reduce((s, c) => s + c.price * c.qty, 0);
     const deliveryCharge = document.querySelector('input[name="delivery"]:checked')?.id === 'express' ? 99 : 0;
     const total = sub + deliveryCharge;
-    
     const subtotalEl = document.getElementById('checkoutSubtotal');
     const totalEl = document.getElementById('checkoutTotal');
-    
     if (subtotalEl) subtotalEl.textContent = `\u20B9${sub.toLocaleString()}`;
     if (totalEl) totalEl.textContent = `\u20B9${total.toLocaleString()}`;
 }
 
 function placeOrder() {
-    // Android-style haptic feedback simulation
-    if (navigator.vibrate) {
-        navigator.vibrate(50);
-    }
-    
-    // Validate cart
+    if (navigator.vibrate) navigator.vibrate(50);
+
     if (cart.length === 0) {
         toast('Your cart is empty');
         return;
     }
-    
-    // Get selected options
+
     const selectedAddress = document.querySelector('input[name="address"]:checked');
     const selectedDelivery = document.querySelector('input[name="delivery"]:checked');
     const selectedPayment = document.querySelector('input[name="payment"]:checked');
-    
+
     if (!selectedAddress || !selectedDelivery || !selectedPayment) {
         toast('Please complete all checkout steps');
         return;
     }
-    
-    // Simulate order processing with Android-style feedback
+
+    // Track order placement attempt
+    const orderTotal = cart.reduce((s, c) => s + c.price * c.qty, 0);
+    const deliveryCharge = selectedDelivery?.id === 'express' ? 99 : 0;
+    SessionTracker.capture('place_order', {
+        order_total: orderTotal + deliveryCharge,
+        item_count: cart.reduce((s, c) => s + c.qty, 0),
+        delivery_type: selectedDelivery?.id || null,
+        payment_method: selectedPayment?.id || null,
+        items: cart.map(c => c.name).join(' | '),
+    });
+
     toast('Processing order...');
-    
-    // Disable button during processing
+
     const placeOrderBtn = document.querySelector('.btn-place-order');
     if (placeOrderBtn) {
         placeOrderBtn.disabled = true;
         placeOrderBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
     }
-    
+
     setTimeout(() => {
-        // Success haptic feedback
-        if (navigator.vibrate) {
-            navigator.vibrate([100, 50, 100]);
-        }
-        
-        // Clear cart
+        if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
+
+        // Track order success
+        SessionTracker.capture('order_success', {
+            order_total: orderTotal + deliveryCharge,
+            item_count: cart.reduce((s, c) => s + c.qty, 0),
+        });
+
         cart = [];
         updateCartBadge();
         renderCart();
-        
-        // Show success message
         toast('Order placed successfully! (demo)');
-        
-        // Re-enable button
+
         if (placeOrderBtn) {
             placeOrderBtn.disabled = false;
             placeOrderBtn.innerHTML = '<i class="fas fa-lock"></i> Place Order';
         }
-        
-        // Go to home with Android-style transition
-        setTimeout(() => {
-            goHome();
-        }, 2000);
+
+        setTimeout(() => { goHome(); }, 2000);
     }, 1500);
-}
-
-// ==========================================
-// MISSING UI FUNCTIONS (Added to fix errors)
-// ==========================================
-
-function toast(msg) {
-    alert(msg); // Fallback: Replace with your custom UI if you have one
-}
-
-function showPage(pageId) {
-    const pages = ['homePage', 'cartPage', 'detailPage', 'checkoutPage'];
-    
-    pages.forEach(p => {
-        const el = document.getElementById(p);
-        if (el) el.style.display = 'none';
-    });
-    
-    const target = document.getElementById(pageId + 'Page');
-    if (target) target.style.display = 'block';
-    
-    const appScroll = document.getElementById('appScroll');
-    if(appScroll) appScroll.scrollTop = 0;
-}
-
-function goHome() {
-    showPage('home');
-    renderCart(); // Refresh cart data
 }
 
 // ==========================================
 // EVENT LISTENERS
 // ==========================================
 
-// Android-style back button handling
-document.addEventListener('DOMContentLoaded', function() {
-    // Handle Android back button
-    let backPressed = false;
-    
-    // Add back button listener for checkout page
-    document.addEventListener('keydown', function(e) {
+document.addEventListener('DOMContentLoaded', function () {
+
+    // Escape key closes checkout back to cart
+    document.addEventListener('keydown', function (e) {
         if (e.key === 'Escape') {
             const checkoutPage = document.getElementById('checkoutPage');
             if (checkoutPage && checkoutPage.style.display !== 'none') {
@@ -906,94 +1119,25 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     });
-    
-    // Add touch feedback for Android-style interactions
+
     setTimeout(() => {
-        // Add delivery option change listeners
+        // Delivery option changes update summary and fire haptic
         const deliveryRadios = document.querySelectorAll('input[name="delivery"]');
         deliveryRadios.forEach(radio => {
-            radio.addEventListener('change', function() {
+            radio.addEventListener('change', function () {
                 if (navigator.vibrate) navigator.vibrate(30);
                 updateCheckoutSummary();
             });
         });
-        
-        // Add address option click listeners with haptic feedback
+
+        // Address card tap selects the radio inside it
         const addressCards = document.querySelectorAll('.address-card');
         addressCards.forEach(card => {
-            card.addEventListener('click', function() {
+            card.addEventListener('click', function () {
                 if (navigator.vibrate) navigator.vibrate(30);
-                
                 const radio = card.querySelector('input[type="radio"]');
-                if (radio) {
-                    radio.checked = true;
-                }
+                if (radio) radio.checked = true;
             });
         });
-    }, 100); 
+    }, 100);
 });
-
-// ==========================================
-// SESSION TRACKER (From Previous Setup)
-// ==========================================
-/* Note: Paste your specific Webhook URL from Google Sheets here */
-/*
-const SessionTracker = (() => {
-  const WEBHOOK_URL = 'YOUR_WEBHOOK_URL_HERE'; 
-  const SESSION_ID = Math.random().toString(36).slice(2, 12);
-  const SESSION_START = Date.now();
-  const events = [];
-  let isFlushed = false;
-
-  function now() { return Date.now() - SESSION_START; }
-
-  function capture(type, data = {}) {
-    events.push({
-      session_id: SESSION_ID,
-      type,
-      ts: new Date().toISOString(),
-      session_ms: now(),
-      url: location.href,
-      ...data,
-    });
-  }
-
-  capture('session_start', {
-    referrer: document.referrer || null,
-    user_agent: navigator.userAgent,
-    screen_w: screen.width,
-    screen_h: screen.height,
-  });
-
-  document.addEventListener('click', e => {
-    const el = e.target;
-    capture('click', {
-      x: Math.round(e.clientX),
-      y: Math.round(e.clientY),
-      target_tag: el.tagName.toLowerCase(),
-      target_id: el.id || null,
-      target_text: el.innerText?.slice(0, 40) || null,
-    });
-  });
-
-  function flush() {
-    if (isFlushed || events.length === 0) return;
-    isFlushed = true;
-    
-    const session = {
-      session_id: SESSION_ID,
-      started_at: new Date(Date.now() - now()).toISOString(),
-      ended_at: new Date().toISOString(),
-      duration_ms: now(),
-      event_count: events.length,
-      events,
-    };
-    navigator.sendBeacon(WEBHOOK_URL, JSON.stringify(session));
-  }
-
-  window.addEventListener('pagehide', flush);
-  window.addEventListener('beforeunload', flush);
-
-  return { capture, getEvents: () => events };
-})();
-*/
