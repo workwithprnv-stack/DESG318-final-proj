@@ -254,5 +254,3 @@ This project is for educational purposes. Ensure compliance with Amazon’s term
 **Note**: This is a frontend demo project. All product data and images are placeholders.
 
 ---
-
-If you want, I can also optimize this for GitHub badges, add screenshots, or make it “portfolio-ready” (which helps a lot for recruiters).
