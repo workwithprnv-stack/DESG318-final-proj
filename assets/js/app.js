@@ -661,10 +661,8 @@ function openProduct(id) {
             </div>
         </div>
     `;
-    document.getElementById('homePage').style.display = 'none';
-    document.getElementById('cartPage').style.display = 'none';
-    document.getElementById('detailPage').style.display = 'block';
-    document.getElementById('appScroll').scrollTop = 0;
+    
+    showPage('detail');
 }
 
 function changeQtyR(d) {
@@ -767,17 +765,11 @@ function checkout() {
 }
 
 function showCheckoutPage() {
-    document.getElementById('homePage').style.display = 'none';
-    document.getElementById('cartPage').style.display = 'none';
-    document.getElementById('detailPage').style.display = 'none';
-    document.getElementById('checkoutPage').style.display = 'block';
+    showPage('checkout');
     
     // Populate checkout items
     renderCheckoutItems();
     updateCheckoutSummary();
-    
-    // Scroll to top
-    document.getElementById('appScroll').scrollTop = 0;
 }
 
 function renderCheckoutItems() {
@@ -804,8 +796,8 @@ function updateCheckoutSummary() {
     const subtotalEl = document.getElementById('checkoutSubtotal');
     const totalEl = document.getElementById('checkoutTotal');
     
-    if (subtotalEl) subtotalEl.textContent = `&#8377;${sub.toLocaleString()}`;
-    if (totalEl) totalEl.textContent = `&#8377;${total.toLocaleString()}`;
+    if (subtotalEl) subtotalEl.textContent = `\u20B9${sub.toLocaleString()}`;
+    if (totalEl) totalEl.textContent = `\u20B9${total.toLocaleString()}`;
 }
 
 function placeOrder() {
@@ -867,6 +859,38 @@ function placeOrder() {
     }, 1500);
 }
 
+// ==========================================
+// MISSING UI FUNCTIONS (Added to fix errors)
+// ==========================================
+
+function toast(msg) {
+    alert(msg); // Fallback: Replace with your custom UI if you have one
+}
+
+function showPage(pageId) {
+    const pages = ['homePage', 'cartPage', 'detailPage', 'checkoutPage'];
+    
+    pages.forEach(p => {
+        const el = document.getElementById(p);
+        if (el) el.style.display = 'none';
+    });
+    
+    const target = document.getElementById(pageId + 'Page');
+    if (target) target.style.display = 'block';
+    
+    const appScroll = document.getElementById('appScroll');
+    if(appScroll) appScroll.scrollTop = 0;
+}
+
+function goHome() {
+    showPage('home');
+    renderCart(); // Refresh cart data
+}
+
+// ==========================================
+// EVENT LISTENERS
+// ==========================================
+
 // Android-style back button handling
 document.addEventListener('DOMContentLoaded', function() {
     // Handle Android back button
@@ -900,142 +924,22 @@ document.addEventListener('DOMContentLoaded', function() {
             card.addEventListener('click', function() {
                 if (navigator.vibrate) navigator.vibrate(30);
                 
-                const radio = this.querySelector('input[type="radio"]');
-                if (radio) radio.checked = true;
-                
-                // Update selected state
-                document.querySelectorAll('.address-card').forEach(c => c.classList.remove('selected'));
-                this.classList.add('selected');
+                const radio = card.querySelector('input[type="radio"]');
+                if (radio) {
+                    radio.checked = true;
+                }
             });
         });
-        
-        // Add delivery option click listeners
-        const deliveryOptions = document.querySelectorAll('.delivery-option');
-        deliveryOptions.forEach(option => {
-            option.addEventListener('click', function() {
-                if (navigator.vibrate) navigator.vibrate(30);
-                
-                const radio = this.querySelector('input[type="radio"]');
-                if (radio) radio.checked = true;
-                
-                // Update selected state
-                document.querySelectorAll('.delivery-option').forEach(o => o.classList.remove('selected'));
-                this.classList.add('selected');
-                
-                updateCheckoutSummary();
-            });
-        });
-        
-        // Add payment option click listeners
-        const paymentOptions = document.querySelectorAll('.payment-option');
-        paymentOptions.forEach(option => {
-            option.addEventListener('click', function() {
-                if (navigator.vibrate) navigator.vibrate(30);
-                
-                const radio = this.querySelector('input[type="radio"]');
-                if (radio) radio.checked = true;
-                
-                // Update selected state
-                document.querySelectorAll('.payment-option').forEach(o => o.classList.remove('selected'));
-                this.classList.add('selected');
-            });
-        });
-        
-        // Add touch feedback for buttons
-        const buttons = document.querySelectorAll('.btn-place-order, .add-address-btn, .checkout-back');
-        buttons.forEach(button => {
-            button.addEventListener('touchstart', function() {
-                if (navigator.vibrate) navigator.vibrate(20);
-            });
-        });
-    }, 100);
+    }, 100); 
 });
 
-// Navigation Functions
-function showPage(page) {
-    document.getElementById('homePage').style.display = 'none';
-    document.getElementById('detailPage').style.display = 'none';
-    document.getElementById('cartPage').style.display = 'none';
-    document.getElementById('checkoutPage').style.display = 'none';
-    
-    if (page === 'cart') {
-        document.getElementById('cartPage').style.display = 'block';
-        renderCart();
-    } else if (page === 'checkout') {
-        showCheckoutPage();
-    }
-    
-    document.getElementById('appScroll').scrollTop = 0;
-}
-
-function goHome() {
-    document.getElementById('homePage').style.display = 'block';
-    document.getElementById('detailPage').style.display = 'none';
-    document.getElementById('cartPage').style.display = 'none';
-    document.getElementById('checkoutPage').style.display = 'none';
-    setNav('navHome');
-    document.getElementById('appScroll').scrollTop = 0;
-}
-
-function setNav(id) {
-    document.querySelectorAll('.nav-btn').forEach(b => b.classList.toggle('active', b.id === id));
-}
-
-// Utility Functions
-function toast(msg) {
-    const t = document.getElementById('toastR');
-    t.textContent = msg;
-    t.classList.add('show');
-    setTimeout(() => t.classList.remove('show'), 2500);
-}
-
-
-// Image error handler function
-function handleImageError(img) {
-    if (!img.dataset.fallback) {
-        img.dataset.fallback = 'true';
-        const productName = img.alt || 'product';
-        const keyword = productName.toLowerCase().replace(/\s+/g, ',').substring(0, 20);
-        
-        // Try Unsplash first, then fallback to placehold.co if that fails
-        img.src = `https://source.unsplash.com/320x320/?${keyword}`;
-        
-        // If Unsplash fails, use a more reliable placeholder
-        img.onerror = function() {
-            if (!img.dataset.placeholder) {
-                img.dataset.placeholder = 'true';
-                img.src = `https://placehold.co/300x300/f5f5f5/333?text=${encodeURIComponent(productName.substring(0, 15))}`;
-            }
-        };
-    }
-}
-
-// Initialize App
-document.addEventListener('DOMContentLoaded', function() {
-    // Start banner rotation
-    setInterval(rotateBanner, 3500);
-    document.getElementById('bannerBtn').onclick = () => filterCat('Electronics');
-    
-    // Initialize with all products
-    filterCat('All');
-    
-    // Add error handling to all images after they load
-    setTimeout(() => {
-        document.querySelectorAll('img').forEach(img => {
-            if (!img.onerror) {
-                img.onerror = function() { handleImageError(this); };
-            }
-        });
-    }, 1000);
-}
-
 // ==========================================
-// SESSION TRACKER
+// SESSION TRACKER (From Previous Setup)
 // ==========================================
+/* Note: Paste your specific Webhook URL from Google Sheets here */
+/*
 const SessionTracker = (() => {
-  // 🚨 PASTE YOUR GOOGLE APPS SCRIPT WEB APP URL HERE 🚨
   const WEBHOOK_URL = 'YOUR_WEBHOOK_URL_HERE'; 
-
   const SESSION_ID = Math.random().toString(36).slice(2, 12);
   const SESSION_START = Date.now();
   const events = [];
@@ -1054,7 +958,6 @@ const SessionTracker = (() => {
     });
   }
 
-  // --- Session start ---
   capture('session_start', {
     referrer: document.referrer || null,
     user_agent: navigator.userAgent,
@@ -1062,7 +965,6 @@ const SessionTracker = (() => {
     screen_h: screen.height,
   });
 
-  // --- Clicks ---
   document.addEventListener('click', e => {
     const el = e.target;
     capture('click', {
@@ -1074,40 +976,6 @@ const SessionTracker = (() => {
     });
   });
 
-  // --- Input (debounced) ---
-  let inputTimer;
-  document.addEventListener('input', e => {
-    clearTimeout(inputTimer);
-    inputTimer = setTimeout(() => {
-      capture('input', {
-        target_id: e.target.id || null,
-        target_type: e.target.type || null,
-        char_count: e.target.value.length,
-      });
-    }, 400);
-  });
-
-  // --- Scroll (debounced) ---
-  let scrollTimer;
-  window.addEventListener('scroll', () => {
-    clearTimeout(scrollTimer);
-    scrollTimer = setTimeout(() => {
-      const maxScroll = document.body.scrollHeight - window.innerHeight;
-      capture('scroll', {
-        scroll_y: Math.round(window.scrollY),
-        scroll_pct: maxScroll > 0 ? Math.round((window.scrollY / maxScroll) * 100) : 0,
-      });
-    }, 200);
-  }, { passive: true });
-
-  // --- Tab focus / blur ---
-  document.addEventListener('visibilitychange', () => {
-    capture(document.hidden ? 'tab_blur' : 'tab_focus', {
-      visibility: document.visibilityState,
-    });
-  });
-
-  // --- Session end / Send Data ---
   function flush() {
     if (isFlushed || events.length === 0) return;
     isFlushed = true;
@@ -1120,9 +988,7 @@ const SessionTracker = (() => {
       event_count: events.length,
       events,
     };
-
-    // Use sendBeacon so it fires reliably when the user closes the tab
-    navigator.sendBeacon('https://script.google.com/macros/s/AKfycbw9O2B9I18rzF4TSLR2nyd0CzZ3v_6i6m1n7syIHAkPqc80_L_BaaAQiwWbhmlHSvX8/exec', JSON.stringify(session));
+    navigator.sendBeacon(WEBHOOK_URL, JSON.stringify(session));
   }
 
   window.addEventListener('pagehide', flush);
@@ -1130,7 +996,4 @@ const SessionTracker = (() => {
 
   return { capture, getEvents: () => events };
 })();
-
-
-
-);
+*/
