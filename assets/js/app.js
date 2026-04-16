@@ -13,7 +13,7 @@ const products = [
         prime: true,
         badge: "Deal",
         emoji: "&#127911;",
-        img: "https://m.media-amazon.com/images/I/61Iqf3q2LXL._AC_UL320_.jpg",
+        img: "img/boAt Rockerz 450 Bluetooth Headphones with Mic.jpg",
         brand: "boAt",
         desc: "40mm drivers, 15h playback, padded earcups for all-day comfort.",
         stock: true
@@ -29,7 +29,7 @@ const products = [
         prime: true,
         badge: "Best Seller",
         emoji: "&#128241;",
-        img: "https://m.media-amazon.com/images/I/61J8s8q9WyL._AC_UL320_.jpg",
+        img: "img/Samsung Galaxy M34 5G (6GB, 128GB, Midnight Blue).jpg",
         brand: "Samsung",
         desc: "Exynos 1280, 6000mAh battery, 120Hz Super AMOLED display.",
         stock: true
@@ -61,7 +61,7 @@ const products = [
         prime: true,
         badge: "40% off",
         emoji: "&#128084;",
-        img: "https://m.media-amazon.com/images/I/81U5YJ1c9NL._AC_UL320_.jpg",
+        img: "img/Levi_s Men_s Slim Fit Jeans.jpg.webp",
         brand: "Levi's",
         desc: "Classic slim fit denim jeans for everyday wear.",
         stock: true
@@ -77,7 +77,7 @@ const products = [
         prime: true,
         badge: "Best Seller",
         emoji: "&#129379;",
-        img: "https://m.media-amazon.com/images/I/61t7G8s5Q9L._AC_UL320_.jpg",
+        img: "img/Prestige Iris 750W Mixer Grinder with 3 Jars.jpg",
         brand: "Prestige",
         desc: "750W motor, 3 SS jars, ideal for grinding and blending.",
         stock: true
@@ -109,7 +109,7 @@ const products = [
         prime: true,
         badge: "",
         emoji: "&#9917;",
-        img: "https://m.media-amazon.com/images/I/51rCBlHGnWL._AC_UL320_.jpg",
+        img: "img/Nivia Carbonite Web Basketball Size 7.jpeg.webp",
         brand: "Nivia",
         desc: "Official size & weight rubber basketball for indoor/outdoor.",
         stock: true
@@ -125,7 +125,7 @@ const products = [
         prime: true,
         badge: "Deal",
         emoji: "&#129510;",
-        img: "https://m.media-amazon.com/images/I/81QZ0G-2qFL._AC_UL320_.jpg",
+        img: "img/LEGO Classic Large Creative Brick Box 10698.jpeg",
         brand: "LEGO",
         desc: "790 bricks in 33 colors with creative building ideas.",
         stock: true
@@ -141,7 +141,7 @@ const products = [
         prime: true,
         badge: "",
         emoji: "&#128138;",
-        img: "https://m.media-amazon.com/images/I/71cJSB+0CUL._AC_UL320_.jpg",
+        img: "img/Maybelline Fit Me Matte+Poreless Foundation 120.jpg.webp",
         brand: "Maybelline",
         desc: "Oil control, pore-minimizing, natural matte finish.",
         stock: true
@@ -173,7 +173,7 @@ const products = [
         prime: true,
         badge: "",
         emoji: "&#127774;",
-        img: "https://m.media-amazon.com/images/I/61z0S+mXBnL._AC_UL320_.jpg",
+        img: "img/Philips SmartSleep Wake-Up Light Alarm Clock.jpg",
         brand: "Philips",
         desc: "Sunrise simulation, 20 brightness settings, FM radio.",
         stock: true
@@ -189,7 +189,7 @@ const products = [
         prime: true,
         badge: "Best Seller",
         emoji: "&#128249;",
-        img: "https://m.media-amazon.com/images/I/71H+jd5DXBL._AC_UL320_.jpg",
+        img: "img/Nike Air Zoom Pegasus 40 Running Shoes Men.jpeg.webp",
         brand: "Nike",
         desc: "Zoom Air cushioning with breathable mesh for long runs.",
         stock: true
@@ -221,7 +221,7 @@ const products = [
         prime: true,
         badge: "Deal",
         emoji: "&#127911;",
-        img: "https://m.media-amazon.com/images/I/61SuAy0pViL._AC_UL320_.jpg",
+        img: "img/boAt Airdopes 141 TWS Earbuds 42H Playback.jpg",
         brand: "boAt",
         desc: "42h total playback, BEAST mode, quad mics for clear calls.",
         stock: true
@@ -237,7 +237,7 @@ const products = [
         prime: true,
         badge: "",
         emoji: "&#9749;",
-        img: "https://m.media-amazon.com/images/I/61d9g8h7-9L._AC_UL320_.jpg",
+        img: "img/Milton Thermosteel Flip Lid Flask 1000ml Silver.jpg",
         brand: "Milton",
         desc: "Hot 24h / cold 12h, food-grade stainless steel inner.",
         stock: true
@@ -253,7 +253,7 @@ const products = [
         prime: true,
         badge: "Best Seller",
         emoji: "&#127911;",
-        img: "https://m.media-amazon.com/images/I/61bL4n1QXoL._AC_UL320_.jpg",
+        img: "img/Sony WH-1000XM4 Wireless Noise Cancelling Headphones.jpg",
         brand: "Sony",
         desc: "Industry-leading noise cancellation with 30-hour battery life.",
         stock: true
@@ -269,7 +269,7 @@ const products = [
         prime: true,
         badge: "Deal",
         emoji: "&#128084;",
-        img: "https://m.media-amazon.com/images/I/71V7R9f9y9L._AC_UL320_.jpg",
+        img: "img/Nike Air Max 270 Men_s Running Shoes.jpg.avif",
         brand: "Nike",
         desc: "Max Air unit for soft, responsive cushioning and modern style.",
         stock: true
@@ -285,7 +285,7 @@ const products = [
         prime: true,
         badge: "Best Seller",
         emoji: "&#129379;",
-        img: "https://m.media-amazon.com/images/I/61QJ8o8v9XL._AC_UL320_.jpg",
+        img: "img/Instant Pot Duo 7-in-1 Electric Pressure Cooker 6L.jpg",
         brand: "Instant Pot",
         desc: "14 smart programs: pressure cooker, slow cooker, rice cooker, yogurt maker.",
         stock: true
@@ -317,7 +317,7 @@ const products = [
         prime: true,
         badge: "",
         emoji: "&#9917;",
-        img: "https://m.media-amazon.com/images/I/71V8X9a8-9L._AC_UL320_.jpg",
+        img: "img/Wilson Evolution Basketball Official Size 7.jpg",
         brand: "Wilson",
         desc: "Official size and weight basketball with superior grip and feel.",
         stock: true
@@ -333,7 +333,7 @@ const products = [
         prime: true,
         badge: "Deal",
         emoji: "&#129510;",
-        img: "https://m.media-amazon.com/images/I/81d9g8h7-9L._AC_UL320_.jpg",
+        img: "img/Barbie DreamHouse Playset with Accessories.jpg",
         brand: "Mattel",
         desc: "3-story dreamhouse with elevator, pool, and 70+ accessories.",
         stock: true
@@ -349,7 +349,7 @@ const products = [
         prime: true,
         badge: "",
         emoji: "&#128138;",
-        img: "https://m.media-amazon.com/images/I/61y9JfZ7N9L._AC_UL320_.jpg",
+        img: "img/Lakme Absolute Perfect Radiance Skin Brightening Serum.jpeg",
         brand: "Lakme",
         desc: "Vitamin C and Pomegranate extract for brighter, radiant skin.",
         stock: true
@@ -365,7 +365,7 @@ const products = [
         prime: true,
         badge: "Best Seller",
         emoji: "&#127911;",
-        img: "https://m.media-amazon.com/images/I/71V7R9f9y9L._AC_UL320_.jpg",
+        img: "img/Apple AirPods Pro (2nd Generation) with MagSafe Case.jpg",
         brand: "Apple",
         desc: "Active Noise Cancellation, Adaptive Transparency, Spatial Audio.",
         stock: true
@@ -381,7 +381,7 @@ const products = [
         prime: true,
         badge: "40% off",
         emoji: "&#128084;",
-        img: "https://m.media-amazon.com/images/I/81U5YJ1c9NL._AC_UL320_.jpg",
+        img: "img/Adidas Men_s Essentials 3-Stripes Fleece Hoodie].jpg.webp",
         brand: "Adidas",
         desc: "Comfortable fleece hoodie with iconic 3-stripes design.",
         stock: true
@@ -397,7 +397,7 @@ const products = [
         prime: true,
         badge: "Deal",
         emoji: "&#129379;",
-        img: "https://m.media-amazon.com/images/I/61QJ8o8v9XL._AC_UL320_.jpg",
+        img: "img/Philips Air Fryer HD9650_90 4.1L 2000W.jpg",
         brand: "Philips",
         desc: "Rapid Air Technology for healthier frying with little to no oil.",
         stock: true
@@ -413,7 +413,7 @@ const products = [
         prime: true,
         badge: "Best Seller",
         emoji: "&#128218;",
-        img: "https://m.media-amazon.com/images/I/81Wcr9os5IL._AC_UL320_.jpg",
+        img: "img/The 7 Habits of Highly Effective People - Stephen Covey.jpg",
         brand: "Stephen Covey",
         desc: "Powerful lessons in personal change and effectiveness.",
         stock: true
@@ -429,7 +429,7 @@ const products = [
         prime: true,
         badge: "",
         emoji: "&#9917;",
-        img: "https://m.media-amazon.com/images/I/71V8X9a8-9L._AC_UL320_.jpg",
+        img: "img/Yonex Mavis 350 Nylon Shuttlecock (White, 6 Pack).jpg",
         brand: "Yonex",
         desc: "Nylon shuttlecock with accurate flight performance and durability.",
         stock: true
@@ -445,7 +445,7 @@ const products = [
         prime: true,
         badge: "",
         emoji: "&#129510;",
-        img: "https://m.media-amazon.com/images/I/81d9g8h7-9L._AC_UL320_.jpg",
+        img: "img/Fisher-Price Laugh & Learn Smart Stages Puppy.jpg",
         brand: "Fisher-Price",
         desc: "Interactive learning toy with lights, sounds and 75+ songs.",
         stock: true
@@ -461,7 +461,7 @@ const products = [
         prime: true,
         badge: "Deal",
         emoji: "&#128138;",
-        img: "https://m.media-amazon.com/images/I/71V8X9a8-9L._AC_UL320_.jpg",
+        img: "img/Neutrogena Hydro Boost Water Gel Moisturizer 50ml.jpg",
         brand: "Neutrogena",
         desc: "Hyaluronic acid gel formula for instant, long-lasting hydration.",
         stock: true
@@ -477,7 +477,7 @@ const products = [
         prime: true,
         badge: "Best Seller",
         emoji: "&#128247;",
-        img: "https://m.media-amazon.com/images/I/61J8s8q9WyL._AC_UL320_.jpg",
+        img: "img/Canon EOS R50 Mirrorless Camera with 18-45mm Lens.jpg",
         brand: "Canon",
         desc: "24.2MP APS-C sensor, 4K video, compact and lightweight design.",
         stock: true
@@ -655,6 +655,9 @@ function showPage(pageId) {
     if (target) target.style.display = 'block';
     const appScroll = document.getElementById('appScroll');
     if (appScroll) appScroll.scrollTop = 0;
+
+    // Always render cart content instantly when navigating to cart
+    if (pageId === 'cart') renderCart();
 }
 
 function goHome() {
@@ -1108,6 +1111,12 @@ function placeOrder() {
 // ==========================================
 
 document.addEventListener('DOMContentLoaded', function () {
+
+    // ── INIT: render products & start banner rotation ──
+    const allList = getFiltered(); // currentCat = 'All' by default
+    renderDeals(allList);
+    renderProducts(allList);
+    setInterval(rotateBanner, 3000);
 
     // Escape key closes checkout back to cart
     document.addEventListener('keydown', function (e) {
